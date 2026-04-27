@@ -1,0 +1,82 @@
+<Page x:Class="woOshLaundrySystem.Views.CreateOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="White">
+    <ScrollViewer>
+        <StackPanel Margin="25" Width="850">
+            <TextBlock Text="Buat Order Laundry" FontSize="26" FontWeight="Bold"/>
+            <TextBlock x:Name="CustomerText" Text="Pelanggan" Margin="0,4,0,12"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="420"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="410"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Kategori"/>
+                    <ComboBox x:Name="CategoryBox" SelectionChanged="CategoryBox_SelectionChanged" Margin="0,2,0,8"/>
+
+                    <TextBlock Text="Layanan"/>
+                    <ComboBox x:Name="ServiceBox" SelectionChanged="ServiceBox_SelectionChanged" Margin="0,2,0,8"/>
+
+                    <TextBlock Text="Kecepatan"/>
+                    <ComboBox x:Name="SpeedBox" SelectionChanged="SpeedBox_SelectionChanged" Margin="0,2,0,8"/>
+
+                    <TextBlock x:Name="WeightLabel" Text="Berat aktual (kg)"/>
+                    <TextBox x:Name="WeightBox" Text="1" TextChanged="WeightBox_TextChanged" Margin="0,2,0,2"/>
+                    <TextBlock x:Name="ChargeWeightText" Text="Berat tagihan regular: 3 kg" Foreground="#666" FontSize="12" Margin="0,0,0,8"/>
+
+                    <TextBlock x:Name="QtyLabel" Text="Jumlah"/>
+                    <TextBox x:Name="QtyBox" Text="1" Margin="0,2,0,8"/>
+
+                    <Button Content="Tambahkan Item" Click="AddItem_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Item" FontWeight="Bold"/>
+                    <DataGrid x:Name="ItemGrid"
+                              Height="255"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              Margin="0,2,0,8">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*"/>
+                            <DataGridTextColumn Header="Kategori" Binding="{Binding ItemCategory}" Width="110"/>
+                            <DataGridTextColumn Header="Berat Aktual" Binding="{Binding WeightKg}" Width="90"/>
+                            <DataGridTextColumn Header="Jumlah" Binding="{Binding Quantity}" Width="70"/>
+                            <DataGridCheckBoxColumn Header="Paket" Binding="{Binding IsCoveredByPackage}" Width="65"/>
+                            <DataGridTextColumn Header="Subtotal" Binding="{Binding RegularSubtotal}" Width="90"/>
+                            <DataGridTextColumn Header="Catatan" Binding="{Binding Notes}" Width="230"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="Hapus Item" Click="RemoveItem_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="Karyawan Penerima" Margin="0,10,0,0"/>
+            <ComboBox x:Name="ReceiverBox" DisplayMemberPath="Name" SelectedValuePath="EmployeeId" Margin="0,2,0,8"/>
+
+            <TextBlock Text="Pekerja Laundry"/>
+            <ComboBox x:Name="WorkerBox" DisplayMemberPath="Name" SelectedValuePath="EmployeeId" Margin="0,2,0,8"/>
+
+            <TextBlock Text="Mode"/>
+            <ComboBox x:Name="ModeBox" SelectionChanged="ModeBox_SelectionChanged" IsEnabled="False" Margin="0,2,0,8"/>
+            <TextBlock Text="Mode ditentukan otomatis oleh sistem berdasarkan paket aktif dan item yang memenuhi syarat." Foreground="#666" FontSize="12" Margin="0,-4,0,8"/>
+
+            <TextBlock Text="Catatan"/>
+            <TextBox x:Name="NotesBox" Height="70" TextWrapping="Wrap" Margin="0,2,0,8"/>
+
+            <Border Background="#F4FBFE" Padding="12" Margin="4,12">
+                <StackPanel>
+                    <TextBlock Text="Ringkasan" FontWeight="Bold" Margin="0,0,0,4"/>
+                    <TextBlock x:Name="SummaryText" Text="Total Bayar Sekarang: Rp0" FontSize="15"/>
+                    <TextBlock Text="Catatan: Berat yang diinput tetap berat aktual. Untuk item kiloan yang dibayar regular, sistem otomatis memakai berat tagihan minimal 3 kg." Foreground="#666" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Button Content="Buat Order &amp; Konfirmasi Bayar" Click="Create_Click"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
